@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `1px solid ${
       theme.colorScheme === "dark" ? "transparent" : theme.colors.gray[2]
     }`,
-    marginBottom: 120,
+    // marginBottom: 120,
   },
 
   mainSection: {
@@ -50,10 +50,6 @@ const useStyles = createStyles((theme) => ({
     "&:hover": {
       backgroundColor:
         theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
-    },
-
-    [theme.fn.smallerThan("xs")]: {
-      display: "none",
     },
   },
 
@@ -123,12 +119,12 @@ export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
         <Group position="apart">
           <TitleIcon />
 
-          <Burger
+          {/* <Burger
             opened={opened}
             onClick={toggle}
             className={classes.burger}
             size="sm"
-          />
+          /> */}
 
           <Menu
             width={260}
@@ -158,62 +154,9 @@ export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item
-                icon={
-                  <IconHeart
-                    size={14}
-                    color={theme.colors.red[6]}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Liked posts
-              </Menu.Item>
-              <Menu.Item
-                icon={
-                  <IconStar
-                    size={14}
-                    color={theme.colors.yellow[6]}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Saved posts
-              </Menu.Item>
-              <Menu.Item
-                icon={
-                  <IconMessage
-                    size={14}
-                    color={theme.colors.blue[6]}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Your comments
-              </Menu.Item>
-
               <Menu.Label>Settings</Menu.Label>
-              <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
-                Account settings
-              </Menu.Item>
-              <Menu.Item icon={<IconSwitchHorizontal size={14} stroke={1.5} />}>
-                Change account
-              </Menu.Item>
               <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
                 Logout
-              </Menu.Item>
-
-              <Menu.Divider />
-
-              <Menu.Label>Danger zone</Menu.Label>
-              <Menu.Item icon={<IconPlayerPause size={14} stroke={1.5} />}>
-                Pause subscription
-              </Menu.Item>
-              <Menu.Item
-                color="red"
-                icon={<IconTrash size={14} stroke={1.5} />}
-              >
-                Delete account
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
