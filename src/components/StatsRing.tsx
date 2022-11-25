@@ -12,7 +12,7 @@ interface StatsRingProps {
   data: {
     label: string;
     stats: string;
-    progress: number;
+    progress: number | any;
     color: string;
     icon: "heart" | "water";
   }[];

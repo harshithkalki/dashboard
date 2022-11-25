@@ -6,7 +6,7 @@ export const TitleIcon = () => {
     <div>
       <Title style={{ fontSize: "30px", fontWeight: "500" }}>
         <IconRun size={"27"} style={{ marginRight: "3px" }} />
-        DashBoard
+        Hydrax
       </Title>
       {/* <p>DashBoard</p> */}
     </div>
