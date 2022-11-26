@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { HeaderTabs } from "./Navbar2";
 import { db } from "../firebase";
 import { StatsRing } from "./StatsRing";
-import { ref, onValue, DataSnapshot } from "firebase/database";
+import { ref, onValue } from "firebase/database";
+import { Mood } from "./Mood";
+import { Center } from "@mantine/core";
+import { Mood2 } from "./Mood2";
 // import { HeaderResponsive } from "./navbar";
 
 interface LatestData {
-  "Emotional State": string;
+  "Emotional State": "Happy" | "Sad" | "Anger";
   Heartbeat: number;
   "Hydration Status": number;
 }
@@ -18,7 +21,6 @@ export const Home = () => {
     "Hydration Status": 0.2,
     Heartbeat: 60,
   });
-
   useEffect(() => {
     const dbref = ref(db, "John");
     onValue(dbref, (snapshot) => {
@@ -36,6 +38,7 @@ export const Home = () => {
     <>
       {/* <HeaderResponsive links={[]} /> */}
       <HeaderTabs tabs={[]} user={{ name: "kalki", image: null }} />
+
       <div
         style={{
           display: "block",
@@ -64,6 +67,12 @@ export const Home = () => {
           ]}
         />
       </div>
+      <Center style={{ marginTop: "10vh" }}>
+        <Mood mood={lastData?.["Emotional State"]} />
+      </Center>
+      <Center style={{ marginTop: "10vh" }}>
+        <Mood2 mood={lastData?.["Emotional State"]} />
+      </Center>
     </>
   );
 };

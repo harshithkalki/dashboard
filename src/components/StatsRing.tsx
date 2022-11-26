@@ -37,7 +37,7 @@ export function StatsRing({ data }: StatsRingProps) {
             sections={[{ value: stat.progress, color: stat.color }]}
             label={
               <Center>
-                <Icon size={22} stroke={1.5} />
+                <Icon size={28} stroke={2} />
               </Center>
             }
           />
@@ -56,7 +56,9 @@ export function StatsRing({ data }: StatsRingProps) {
   });
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+      {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
       {stats}
+      {/* </div> */}
     </SimpleGrid>
   );
 }
