@@ -6,26 +6,53 @@ import {
   SimpleGrid,
   Text,
 } from "@mantine/core";
-import { IconMoodAngry, IconMoodSad, IconMoodSmileBeam } from "@tabler/icons";
+import {
+  IconMoodAngry,
+  IconMoodNeutral,
+  IconMoodSad,
+  IconMoodSick,
+  IconMoodSmileBeam,
+  IconMoodSmileDizzy,
+  IconMoodSuprised,
+  IconMoodWrrr,
+} from "@tabler/icons";
 
 interface props {
-  mood: "Happy" | "Sad" | "Anger";
+  mood:
+    | "Happy"
+    | "Sad"
+    | "Anger"
+    | "Disgust"
+    | "Fear"
+    | "Mixed"
+    | "Neutral"
+    | "Surprise";
 }
 const color = {
-  Happy: "green",
+  Fear: "#ff00ff",
+  Happy: "#80ff80",
   Anger: "red",
-  Sad: "#FFEA00",
+  Sad: "#4d5d53",
+  Surprise: "#FFEA00",
+  Disgust: "#006600",
+  Mixed: "#f2f2f2",
+  Neutral: "#00ffff",
 };
 const icons = {
   Happy: IconMoodSmileBeam,
   Anger: IconMoodAngry,
+  Surprise: IconMoodSuprised,
   Sad: IconMoodSad,
+  Disgust: IconMoodWrrr,
+  Fear: IconMoodSick,
+  Mixed: IconMoodSmileDizzy,
+  Neutral: IconMoodNeutral,
 };
 
 export function Mood2({ mood }: props) {
   const Icon = icons?.[mood];
   return (
-    <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+    <SimpleGrid cols={1} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
       <Paper>
         <Group>
           <RingProgress

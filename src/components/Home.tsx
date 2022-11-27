@@ -4,12 +4,20 @@ import { db } from "../firebase";
 import { StatsRing } from "./StatsRing";
 import { ref, onValue } from "firebase/database";
 import { Mood } from "./Mood";
-import { Center } from "@mantine/core";
+import { Center, SimpleGrid } from "@mantine/core";
 import { Mood2 } from "./Mood2";
 // import { HeaderResponsive } from "./navbar";
 
 interface LatestData {
-  "Emotional State": "Happy" | "Sad" | "Anger";
+  "Emotional State":
+    | "Happy"
+    | "Sad"
+    | "Anger"
+    | "Disgust"
+    | "Fear"
+    | "Mixed"
+    | "Neutral"
+    | "Surprise";
   Heartbeat: number;
   "Hydration Status": number;
 }
@@ -42,37 +50,34 @@ export const Home = () => {
       <div
         style={{
           display: "block",
-          width: "60vw",
+          width: "65vw",
           margin: "auto",
           marginTop: "5vh",
           alignItems: "center",
         }}
       >
-        <StatsRing
-          data={[
-            {
-              label: "Heartbeat",
-              stats: `${lastData?.Heartbeat}`,
-              progress: (lastData?.Heartbeat / 180) * 100,
-              color: "teal",
-              icon: "heart",
-            },
-            {
-              label: "Hydration",
-              stats: `${lastData?.["Hydration Status"]}`,
-              progress: lastData?.["Hydration Status"] * 100,
-              color: "blue",
-              icon: "water",
-            },
-          ]}
-        />
+        <SimpleGrid cols={1} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+          <StatsRing
+            data={[
+              {
+                label: "Heartbeat",
+                stats: `${lastData?.Heartbeat}`,
+                progress: (lastData?.Heartbeat / 180) * 100,
+                color: "teal",
+                icon: "heart",
+              },
+              {
+                label: "Hydration",
+                stats: `${lastData?.["Hydration Status"]}`,
+                progress: (lastData?.["Hydration Status"] / 1.029) * 100,
+                color: "blue",
+                icon: "water",
+              },
+            ]}
+          />
+          <Mood2 mood={lastData?.["Emotional State"]} />
+        </SimpleGrid>
       </div>
-      <Center style={{ marginTop: "10vh" }}>
-        <Mood mood={lastData?.["Emotional State"]} />
-      </Center>
-      <Center style={{ marginTop: "10vh" }}>
-        <Mood2 mood={lastData?.["Emotional State"]} />
-      </Center>
     </>
   );
 };
