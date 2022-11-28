@@ -3,11 +3,8 @@ import { HeaderTabs } from "./Navbar2";
 import { db } from "../firebase";
 import { StatsRing } from "./StatsRing";
 import { ref, onValue } from "firebase/database";
-import { Mood } from "./Mood";
-import { Center, SimpleGrid } from "@mantine/core";
+import { Container, SimpleGrid } from "@mantine/core";
 import { Mood2 } from "./Mood2";
-// import { HeaderResponsive } from "./navbar";
-
 interface LatestData {
   "Emotional State":
     | "Happy"
@@ -47,15 +44,7 @@ export const Home = () => {
       {/* <HeaderResponsive links={[]} /> */}
       <HeaderTabs tabs={[]} user={{ name: "kalki", image: null }} />
 
-      <div
-        style={{
-          display: "block",
-          width: "65vw",
-          margin: "auto",
-          marginTop: "5vh",
-          alignItems: "center",
-        }}
-      >
+      <Container style={{ marginTop: "6vh" }}>
         <SimpleGrid cols={1} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
           <StatsRing
             data={[
@@ -77,7 +66,7 @@ export const Home = () => {
           />
           <Mood2 mood={lastData?.["Emotional State"]} />
         </SimpleGrid>
-      </div>
+      </Container>
     </>
   );
 };
