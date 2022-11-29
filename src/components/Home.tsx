@@ -5,6 +5,8 @@ import { StatsRing } from "./StatsRing";
 import { ref, onValue } from "firebase/database";
 import { Container, SimpleGrid } from "@mantine/core";
 import { Mood2 } from "./Mood2";
+import { Graph2 } from "./Graph2";
+// import { Graph } from "./Graph";
 interface LatestData {
   "Emotional State":
     | "Happy"
@@ -18,26 +20,38 @@ interface LatestData {
   Heartbeat: number;
   "Hydration Status": number;
 }
+interface Graphdata {
+  index: number;
+  data: number;
+}
 
 export const Home = () => {
-  const [userData, setUserData] = useState([]);
+  const [HeartData, setHeartData] = useState<Graphdata>();
+  const [HydrationData, setHydrationData] = useState([]);
   const [lastData, setLastData] = useState<LatestData>({
     "Emotional State": "Happy",
     "Hydration Status": 0.2,
     Heartbeat: 60,
   });
+
   useEffect(() => {
     const dbref = ref(db, "John");
     onValue(dbref, (snapshot) => {
-      snapshot.val();
       const data = snapshot.val();
-
-      console.log(snapshot.val());
-      setUserData(data);
       setLastData(data[data.length - 1]);
-      // console.log(data[data.length - 1].Heartbeat);
+      // console.log(Array.from(data));
+      const Heartdata = data.map((user: LatestData, index: number) => {
+        if (user) return { index: index, data: user.Heartbeat };
+      });
+      setHeartData(Heartdata);
+      const Hydreationdata = data.map((user: LatestData, index: number) => {
+        if (user) return { index: index, data: user["Hydration Status"] };
+      });
+      setHydrationData(Hydreationdata);
     });
   }, []);
+  // console.log(HeartData);
+  // console.log(HydrationData);
 
   return (
     <>
@@ -66,6 +80,12 @@ export const Home = () => {
           />
           <Mood2 mood={lastData?.["Emotional State"]} />
         </SimpleGrid>
+      </Container>
+      <Container maw="600px">
+        {HeartData && <Graph2 data={HeartData} />}
+      </Container>
+      <Container maw="600px">
+        {HydrationData && <Graph2 data={HydrationData} />}
       </Container>
     </>
   );
