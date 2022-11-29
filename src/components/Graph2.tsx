@@ -32,7 +32,7 @@ export const Graph2 = (pdata: props | any) => {
           />
           {/* strokeDasharray="3 3" */}
           <CartesianGrid stroke="#545454" />
-          <Tooltip />
+          <Tooltip contentStyle={{ backgroundColor: "#212020" }} />
           {/* <Legend color="black" /> */}
           <XAxis dataKey="index" />
           <YAxis />
