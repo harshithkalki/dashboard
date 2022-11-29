@@ -1,10 +1,11 @@
-import { Container } from "@mantine/core";
+import { Center, Container } from "@mantine/core";
 import React from "react";
 import {
   CartesianGrid,
   Line,
   LineChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -19,19 +20,24 @@ export const Graph2 = (pdata: props | any) => {
   });
   console.log(gdata);
   return (
-    <ResponsiveContainer width="100%" height={200}>
-      <LineChart data={gdata}>
-        <Line
-          type="monotone"
-          dataKey="data"
-          stroke="#03fcf8"
-          strokeWidth={3}
-          fill="#545454"
-        />
-        <CartesianGrid stroke="#545454" />
-        <XAxis dataKey="index" />
-        <YAxis />
-      </LineChart>
-    </ResponsiveContainer>
+    <>
+      <ResponsiveContainer width="95%" height={200}>
+        <LineChart data={gdata}>
+          <Line
+            type="monotone"
+            dataKey="data"
+            stroke="#03fcf8"
+            strokeWidth={3}
+            fill="#545454"
+          />
+          {/* strokeDasharray="3 3" */}
+          <CartesianGrid stroke="#545454" />
+          <Tooltip />
+          {/* <Legend color="black" /> */}
+          <XAxis dataKey="index" />
+          <YAxis />
+        </LineChart>
+      </ResponsiveContainer>
+    </>
   );
 };

@@ -3,7 +3,7 @@ import { HeaderTabs } from "./Navbar2";
 import { db } from "../firebase";
 import { StatsRing } from "./StatsRing";
 import { ref, onValue } from "firebase/database";
-import { Container, SimpleGrid } from "@mantine/core";
+import { Center, Container, SimpleGrid, Text } from "@mantine/core";
 import { Mood2 } from "./Mood2";
 import { Graph2 } from "./Graph2";
 // import { Graph } from "./Graph";
@@ -81,12 +81,28 @@ export const Home = () => {
           <Mood2 mood={lastData?.["Emotional State"]} />
         </SimpleGrid>
       </Container>
-      <Container maw="600px">
-        {HeartData && <Graph2 data={HeartData} />}
-      </Container>
-      <Container maw="600px">
-        {HydrationData && <Graph2 data={HydrationData} />}
-      </Container>
+
+      {HeartData && (
+        <Container maw="600px" mt="10vh">
+          <Graph2 data={HeartData} />
+          <Center>
+            <Text color="dimmed" size="md" transform="uppercase" weight={700}>
+              HeartBeat
+            </Text>
+          </Center>
+        </Container>
+      )}
+
+      {HydrationData && (
+        <Container maw="600px" mt="10vh" mb="15vh">
+          <Graph2 data={HydrationData} />
+          <Center>
+            <Text color="dimmed" size="md" transform="uppercase" weight={700}>
+              Hydration
+            </Text>
+          </Center>
+        </Container>
+      )}
     </>
   );
 };
