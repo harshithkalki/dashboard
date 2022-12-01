@@ -1,6 +1,8 @@
 import { Center, Container } from "@mantine/core";
 import React from "react";
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
   Line,
   LineChart,
@@ -14,7 +16,7 @@ interface props {
   data: number | any;
 }
 
-export const Graph2 = (pdata: props | any) => {
+export const Graph = (pdata: props | any) => {
   const gdata = pdata.data.filter(function (element: any) {
     return element !== undefined;
   });
@@ -29,8 +31,8 @@ export const Graph2 = (pdata: props | any) => {
   return (
     <>
       <ResponsiveContainer width="95%" height={200}>
-        <LineChart data={gtdata}>
-          <Line
+        <AreaChart data={gtdata}>
+          <Area
             type="monotone"
             dataKey="data"
             stroke="#03fcf8"
@@ -43,7 +45,7 @@ export const Graph2 = (pdata: props | any) => {
           {/* <Legend color="black" /> */}
           <XAxis dataKey="index" />
           <YAxis />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </>
   );

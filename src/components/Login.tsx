@@ -10,8 +10,45 @@ import {
   Group,
   Button,
 } from "@mantine/core";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 
 export function LoginComp() {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const AuthFunc = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (AuthFunc?.currentUser !== null) {
+      navigate("/");
+    }
+  }, [AuthFunc?.currentUser]);
+
+  async function handleSubmit(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
+
+    try {
+      setError("");
+      setLoading(true);
+      if (emailRef?.current?.value && passwordRef?.current?.value) {
+        await AuthFunc?.login(
+          emailRef?.current?.value,
+          passwordRef?.current?.value
+        );
+        // navigate("/");
+      }
+    } catch (e) {
+      console.log(e);
+      setError("Failed to log in");
+    }
+    setLoading(false);
+  }
   return (
     <Container size={420} my={40}>
       <Title
@@ -28,31 +65,33 @@ export function LoginComp() {
         <Anchor<"a">
           href="#"
           size="sm"
-          onClick={(event) => event.preventDefault()}
+          onClick={(event) => {
+            event.preventDefault();
+            navigate("/signup");
+          }}
         >
           Create account
         </Anchor>
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@mantine.dev" required />
+        <TextInput
+          label="Email"
+          placeholder="you@email.com"
+          ref={emailRef}
+          required
+        />
         <PasswordInput
           label="Password"
           placeholder="Your password"
+          ref={passwordRef}
           required
           mt="md"
         />
         <Group position="apart" mt="lg">
           <Checkbox label="Remember me" sx={{ lineHeight: 1 }} />
-          <Anchor<"a">
-            onClick={(event) => event.preventDefault()}
-            href="#"
-            size="sm"
-          >
-            Forgot password?
-          </Anchor>
         </Group>
-        <Button fullWidth mt="xl">
+        <Button fullWidth mt="xl" disabled={loading} onClick={handleSubmit}>
           Sign in
         </Button>
       </Paper>

@@ -8,22 +8,12 @@ import {
   Text,
   Menu,
   Tabs,
-  Burger,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  IconLogout,
-  IconHeart,
-  IconStar,
-  IconMessage,
-  IconSettings,
-  IconPlayerPause,
-  IconTrash,
-  IconSwitchHorizontal,
-  IconChevronDown,
-} from "@tabler/icons";
+import { IconLogout, IconChevronDown } from "@tabler/icons";
 import { TitleIcon } from "./title";
-import { StatsRing } from "./StatsRing";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -105,8 +95,11 @@ interface HeaderTabsProps {
 
 export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
   const { classes, theme, cx } = useStyles();
+  const navigate = useNavigate();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [error, setError] = useState("");
+  const AuthFunc = useAuth();
 
   const items = tabs.map((tab) => (
     <Tabs.Tab value={tab} key={tab}>
@@ -114,6 +107,16 @@ export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
     </Tabs.Tab>
   ));
 
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await AuthFunc?.logout();
+      // navigate(`/login`);
+    } catch {
+      setError("Failed to log out");
+    }
+  }
   return (
     <>
       <div className={classes.header}>
@@ -157,7 +160,10 @@ export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Label>Settings</Menu.Label>
-                <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
+                <Menu.Item
+                  icon={<IconLogout size={14} stroke={1.5} />}
+                  onClick={handleLogout}
+                >
                   Logout
                 </Menu.Item>
               </Menu.Dropdown>

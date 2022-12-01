@@ -6,7 +6,9 @@ import { ref, onValue } from "firebase/database";
 import { Center, Container, SimpleGrid, Text } from "@mantine/core";
 import { Mood2 } from "./Mood2";
 import { Graph2 } from "./Graph2";
-// import { Graph } from "./Graph";
+import { Graph } from "./Graph";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 interface LatestData {
   "Emotional State":
     | "Happy"
@@ -28,10 +30,17 @@ interface Graphdata {
 export const Home = () => {
   const [HeartData, setHeartData] = useState<Graphdata>();
   const [HydrationData, setHydrationData] = useState([]);
+  const AuthFunc = useAuth();
+  const navigate = useNavigate();
   const [lastData, setLastData] = useState<LatestData>({
-    "Emotional State": "Happy",
-    "Hydration Status": 0.2,
-    Heartbeat: 60,
+    "Emotional State": "Neutral",
+    "Hydration Status": 0.0,
+    Heartbeat: 0,
+  });
+  useEffect(() => {
+    if (AuthFunc?.currentUser === null) {
+      navigate("/login");
+    }
   });
 
   useEffect(() => {
@@ -55,8 +64,10 @@ export const Home = () => {
 
   return (
     <>
-      {/* <HeaderResponsive links={[]} /> */}
-      <HeaderTabs tabs={[]} user={{ name: "kalki", image: null }} />
+      <HeaderTabs
+        tabs={[]}
+        user={{ name: "harshithkalki@gmail.com", image: null }}
+      />
 
       <Container style={{ marginTop: "6vh" }}>
         <SimpleGrid cols={1} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
@@ -95,7 +106,7 @@ export const Home = () => {
 
       {HydrationData && (
         <Container maw="600px" mt="10vh" mb="15vh">
-          <Graph2 data={HydrationData} />
+          <Graph data={HydrationData} />
           <Center>
             <Text color="dimmed" size="md" transform="uppercase" weight={700}>
               Hydration
