@@ -1,18 +1,18 @@
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
   Anchor,
   Paper,
   Title,
   Text,
   Container,
-  Group,
   Button,
 } from "@mantine/core";
+import { ref, set } from "firebase/database";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
+import { db } from "../firebase";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -42,7 +42,8 @@ export function Signup() {
         );
         navigate("/");
       }
-    } catch {
+    } catch (e) {
+      console.log(e);
       setError("Failed to create an account");
     }
 
@@ -86,6 +87,7 @@ export function Signup() {
           required
           mt="md"
           ref={passwordRef}
+          error={error}
         />
         <PasswordInput
           label="Confirm Password"
@@ -93,6 +95,7 @@ export function Signup() {
           required
           ref={passwordConfirmRef}
           mt="md"
+          error={error}
         />
         <Button disabled={loading} fullWidth mt="xl" onClick={handleSubmit}>
           Sign up

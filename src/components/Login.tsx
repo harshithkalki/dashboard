@@ -10,6 +10,7 @@ import {
   Group,
   Button,
 } from "@mantine/core";
+import { AuthError } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
@@ -26,7 +27,7 @@ export function LoginComp() {
     if (AuthFunc?.currentUser !== null) {
       navigate("/");
     }
-  }, [AuthFunc?.currentUser]);
+  }, [AuthFunc?.currentUser, navigate]);
 
   async function handleSubmit(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -44,8 +45,7 @@ export function LoginComp() {
         // navigate("/");
       }
     } catch (e) {
-      console.log(e);
-      setError("Failed to log in");
+      setError("Email or Password incorrect");
     }
     setLoading(false);
   }
@@ -79,12 +79,14 @@ export function LoginComp() {
           label="Email"
           placeholder="you@email.com"
           ref={emailRef}
+          error={error}
           required
         />
         <PasswordInput
           label="Password"
           placeholder="Your password"
           ref={passwordRef}
+          error={error}
           required
           mt="md"
         />

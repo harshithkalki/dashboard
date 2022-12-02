@@ -94,9 +94,8 @@ interface HeaderTabsProps {
 }
 
 export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
-  const { classes, theme, cx } = useStyles();
+  const { classes, cx } = useStyles();
   const navigate = useNavigate();
-  const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [error, setError] = useState("");
   const AuthFunc = useAuth();

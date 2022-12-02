@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { HeaderTabs } from "./Navbar2";
 import { db } from "../firebase";
 import { StatsRing } from "./StatsRing";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 import { Center, Container, SimpleGrid, Text } from "@mantine/core";
 import { Mood2 } from "./Mood2";
 import { Graph2 } from "./Graph2";
@@ -29,7 +29,7 @@ interface Graphdata {
 
 export const Home = () => {
   const [HeartData, setHeartData] = useState<Graphdata>();
-  const [HydrationData, setHydrationData] = useState([]);
+  const [HydrationData, setHydrationData] = useState<Graphdata>();
   const AuthFunc = useAuth();
   const navigate = useNavigate();
   const [lastData, setLastData] = useState<LatestData>({
@@ -44,29 +44,33 @@ export const Home = () => {
   });
 
   useEffect(() => {
-    const dbref = ref(db, "John");
+    const dbref = ref(db, `${AuthFunc?.currentUser?.email?.split("@")[0]}`);
+    // const dbref = ref(db, `John`);
     onValue(dbref, (snapshot) => {
       const data = snapshot.val();
-      setLastData(data[data.length - 1]);
-      // console.log(Array.from(data));
-      const Heartdata = data.map((user: LatestData, index: number) => {
-        if (user) return { index: index, data: user.Heartbeat };
-      });
-      setHeartData(Heartdata);
-      const Hydreationdata = data.map((user: LatestData, index: number) => {
-        if (user) return { index: index, data: user["Hydration Status"] };
-      });
-      setHydrationData(Hydreationdata);
+      console.log(data);
+      if (data) {
+        setLastData(data[data.length - 1]);
+        // console.log(Array.from(data));
+        const Heartdata = data.map((user: LatestData, index: number) => {
+          if (user) return { index: index, data: user.Heartbeat };
+        });
+        setHeartData(Heartdata);
+        const Hydreationdata = data.map((user: LatestData, index: number) => {
+          if (user) return { index: index, data: user["Hydration Status"] };
+        });
+        setHydrationData(Hydreationdata);
+      }
     });
   }, []);
-  // console.log(HeartData);
+  // console.log();
   // console.log(HydrationData);
 
   return (
     <>
       <HeaderTabs
         tabs={[]}
-        user={{ name: "harshithkalki@gmail.com", image: null }}
+        user={{ name: `${AuthFunc?.currentUser?.email}`, image: null }}
       />
 
       <Container style={{ marginTop: "6vh" }}>

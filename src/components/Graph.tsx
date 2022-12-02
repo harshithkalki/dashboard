@@ -31,7 +31,7 @@ export const Graph = (pdata: props | any) => {
   return (
     <>
       <ResponsiveContainer width="95%" height={200}>
-        <AreaChart data={gtdata}>
+        <AreaChart data={gdata}>
           <Area
             type="monotone"
             dataKey="data"

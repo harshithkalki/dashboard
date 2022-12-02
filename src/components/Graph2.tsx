@@ -29,7 +29,7 @@ export const Graph2 = (pdata: props | any) => {
   return (
     <>
       <ResponsiveContainer width="95%" height={200}>
-        <LineChart data={gtdata}>
+        <LineChart data={gdata}>
           <Line
             type="monotone"
             dataKey="data"
