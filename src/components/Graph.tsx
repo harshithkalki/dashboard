@@ -4,13 +4,12 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { IconCircle } from "@tabler/icons";
 interface props {
   index: number | any;
   data: number | any;
@@ -20,13 +19,13 @@ export const Graph = (pdata: props | any) => {
   const gdata = pdata.data.filter(function (element: any) {
     return element !== undefined;
   });
-  const gtdata = [
-    { index: 1, data: 70 },
-    { index: 2, data: 90 },
-    { index: 3, data: 60 },
-    { index: 4, data: 20 },
-    { index: 5, data: 102 },
-  ];
+  // const gtdata = [
+  //   { index: 1, data: 70 },
+  //   { index: 2, data: 90 },
+  //   { index: 3, data: 60 },
+  //   { index: 4, data: 20 },
+  //   { index: 5, data: 102 },
+  // ];
   // console.log(gdata);
   return (
     <>

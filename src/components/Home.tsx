@@ -3,12 +3,22 @@ import { HeaderTabs } from "./Navbar2";
 import { db } from "../firebase";
 import { StatsRing } from "./StatsRing";
 import { ref, onValue, set } from "firebase/database";
-import { Center, Container, SimpleGrid, Text } from "@mantine/core";
+import {
+  Badge,
+  Center,
+  Container,
+  Flex,
+  Group,
+  Paper,
+  SimpleGrid,
+  Text,
+} from "@mantine/core";
 import { Mood2 } from "./Mood2";
 import { Graph2 } from "./Graph2";
 import { Graph } from "./Graph";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
+import { IconCircle } from "@tabler/icons";
 interface LatestData {
   "Emotional State":
     | "Happy"
@@ -116,7 +126,37 @@ export const Home = () => {
         <Container maw="600px" mt="10vh" mb="15vh">
           <Graph data={HydrationData} />
           <Center>
-            <Text color="dimmed" size="md" transform="uppercase" weight={700}>
+            <Flex
+              w={"80%"}
+              m={"auto"}
+              style={{ justifyContent: "space-around" }}
+            >
+              <Group>
+                <Badge size="xs" color={"red"}>
+                  0 - 0.35
+                </Badge>
+                <Text size={"xs"}>Dehydrated</Text>
+              </Group>
+              <Group>
+                <Badge size="xs">0.35 - 0.65</Badge>
+                <Text size={"xs"}>M Hydrated</Text>
+              </Group>
+              <Group>
+                <Badge size="xs" color={"green"}>
+                  {"0.65 <"}
+                </Badge>
+                <Text size={"xs"}>Hydrated</Text>
+              </Group>
+            </Flex>
+          </Center>
+          <Center>
+            <Text
+              color="dimmed"
+              size="md"
+              transform="uppercase"
+              weight={700}
+              mt={"2vh"}
+            >
               Hydration
             </Text>
           </Center>
