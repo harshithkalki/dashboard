@@ -40,6 +40,7 @@ export function Signup() {
           emailRef?.current?.value,
           passwordRef?.current?.value
         );
+        set(ref(db, `${emailRef?.current?.value.split("@")[0]}`), "");
         navigate("/");
       }
     } catch (e) {

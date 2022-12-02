@@ -45,6 +45,7 @@ export const Home = () => {
 
   useEffect(() => {
     const dbref = ref(db, `${AuthFunc?.currentUser?.email?.split("@")[0]}`);
+    // console.log(AuthFunc?.currentUser?.email?.split("@")[0]);
     // const dbref = ref(db, `John`);
     onValue(dbref, (snapshot) => {
       const data = snapshot.val();
@@ -70,7 +71,10 @@ export const Home = () => {
     <>
       <HeaderTabs
         tabs={[]}
-        user={{ name: `${AuthFunc?.currentUser?.email}`, image: null }}
+        user={{
+          name: `${AuthFunc?.currentUser?.email?.split("@")[0]}`,
+          image: null,
+        }}
       />
 
       <Container style={{ marginTop: "6vh" }}>
